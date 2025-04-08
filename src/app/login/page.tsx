@@ -59,7 +59,10 @@ export default function LoginPage() {
         <div className="space-y-6">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Email
             </label>
             <div className="relative border border-gray-300 shadow rounded-lg">
@@ -77,7 +80,10 @@ export default function LoginPage() {
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Password
             </label>
             <div className="relative border border-gray-300 shadow rounded-lg">
@@ -102,7 +108,10 @@ export default function LoginPage() {
 
           {/* Forgot */}
           <div className="flex justify-end text-sm">
-            <Link href="/forgotpassword" className="text-emerald-600 hover:text-emerald-700">
+            <Link
+              href="/forgotpassword"
+              className="text-emerald-600 hover:text-emerald-700"
+            >
               Forgot Password?
             </Link>
           </div>
@@ -130,7 +139,10 @@ export default function LoginPage() {
           {/* Signup link */}
           <p className="text-center text-gray-600">
             Don't have an account?{" "}
-            <Link href="/signup" className="text-emerald-600 hover:text-emerald-700">
+            <Link
+              href="/signup"
+              className="text-emerald-600 hover:text-emerald-700"
+            >
               Create Account
             </Link>
           </p>
