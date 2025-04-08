@@ -43,7 +43,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/ishan1603/AuthenticationNextJS/issues"
   },

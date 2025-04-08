@@ -13,15 +13,12 @@ export async function GET(req: NextRequest) {
 
     // Get token from cookies
     const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
+    const token = (await cookieStore).get("token")?.value;
     console.log("Token from cookies:", token ? "exists" : "missing");
 
     if (!token) {
       console.log("No token found in cookies");
-      return NextResponse.json(
-        { error: "Not authenticated" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
     console.log("Verifying JWT...");
@@ -33,9 +30,11 @@ export async function GET(req: NextRequest) {
       );
     }
     // Verify JWT
-    const decoded = jwt.verify(token, process.env.TOKEN_SECRET) as { id: string };
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET) as {
+      id: string;
+    };
     console.log("JWT decoded successfully, user ID:", decoded.id);
-    
+
     // Find user in database
     console.log("Searching for user in DB...");
     const user = await User.findById(decoded.id).select(
@@ -44,10 +43,7 @@ export async function GET(req: NextRequest) {
 
     if (!user) {
       console.log("User not found in database");
-      return NextResponse.json(
-        { error: "User not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     console.log("User found, preparing response...");

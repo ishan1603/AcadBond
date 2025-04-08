@@ -1,4 +1,4 @@
-import connectDB  from "@/dbConfig/dbConfig";
+import connectDB from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
@@ -9,13 +9,25 @@ connectDB();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { name, email, password, userType, collegeName, interests, graduationYear, cgpa, position, googleScholar, otherLinks  } = reqBody;
 
-    console.log(reqBody);
+    const {
+      name,
+      email,
+      password,
+      userType,
+      collegeName,
+      interests,
+      graduationYear,
+      cgpa,
+      position,
+      googleScholar,
+      otherLinks = "", // provide default if undefined
+    } = reqBody;
 
-    //check if user already exists
+    console.log("Received body:", reqBody);
+
+    // check if user already exists
     const user = await User.findOne({ email });
-
     if (user) {
       return NextResponse.json(
         { error: "User already exists" },
@@ -23,7 +35,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //hash password
+    // hash password
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
@@ -31,14 +43,20 @@ export async function POST(request: NextRequest) {
       name,
       email,
       password: hashedPassword,
-      userType, collegeName, interests, graduationYear, cgpa, position, googleScholar, otherLinks 
-
+      userType,
+      collegeName,
+      interests,
+      graduationYear,
+      cgpa,
+      position,
+      googleScholar,
+      otherLinks,
     });
 
     const savedUser = await newUser.save();
-    console.log(savedUser);
+    console.log("User saved:", savedUser);
 
-    //send verification email
+    // send verification email
     await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
 
     return NextResponse.json({
@@ -47,6 +65,7 @@ export async function POST(request: NextRequest) {
       savedUser,
     });
   } catch (error: any) {
+    console.error("Signup error:", error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

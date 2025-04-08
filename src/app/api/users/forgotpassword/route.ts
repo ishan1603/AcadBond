@@ -1,11 +1,11 @@
-import { connect } from "@/dbConfig/dbConfig";
+import connectDB from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 
-connect();
+connectDB();
 
 export async function POST(request: NextRequest) {
   try {

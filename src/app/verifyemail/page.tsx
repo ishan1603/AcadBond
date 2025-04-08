@@ -11,11 +11,11 @@ export default function VerifyEmailPage() {
 
   const verifyUserEmail = async () => {
     try {
-      axios.post("api/users/verifyemail", { token });
+      await axios.post("/api/users/verifyemail", { token });
       setVerified(true);
     } catch (error: any) {
       setError(true);
-      console.log(error.response.data);
+      console.error("Verification error:", error.response?.data);
     }
   };
 
@@ -31,24 +31,47 @@ export default function VerifyEmailPage() {
   }, [token]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      {verified && (
-        <div>
-          <h2 className="text-4xl text-green-600 mb-5">Email Verified</h2>
-          <Link
-            href="/login"
-            className=" p-3 items-center ml-15 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer mb-8 mt-3 hover:scale-105 transition-all"
-          >
-            Login
-          </Link>
-        </div>
-      )}
-      {error && (
-        <div>
-          <h2 className="text-2xl bg-red-500 text-black">Error</h2>
-          <Link href="/login">Login</Link>
-        </div>
-      )}
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-[url('https://images.unsplash.com/photo-1564910443496-5fd2d76b47fa?q=80&w=1935&auto=format&fit=crop')] px-4">
+      <div className="bg-white bg-opacity-90 shadow-xl rounded-3xl p-10 max-w-md w-full text-center">
+        {verified ? (
+          <>
+            <h2 className="text-3xl font-semibold text-green-600 mb-3">
+              Email Verified
+            </h2>
+            <p className="text-gray-700 mb-6">
+              Your email has been successfully verified. You can now sign in.
+            </p>
+            <Link
+              href="/login"
+              className="inline-block bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition duration-200 font-medium"
+            >
+              Go to Login
+            </Link>
+          </>
+        ) : error ? (
+          <>
+            <h2 className="text-2xl font-semibold text-red-600 mb-3">
+              Verification Failed
+            </h2>
+            <p className="text-gray-700 mb-6">
+              Something went wrong while verifying your email. Try again or
+              contact support.
+            </p>
+            <Link
+              href="/login"
+              className="inline-block bg-gray-600 text-white px-6 py-2 rounded-xl hover:bg-gray-700 transition duration-200 font-medium"
+            >
+              Back to Login
+            </Link>
+          </>
+        ) : (
+          <>
+            <h2 className="text-xl font-medium text-gray-800">
+              Verifying your email...
+            </h2>
+          </>
+        )}
+      </div>
     </div>
   );
 }

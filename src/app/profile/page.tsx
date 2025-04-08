@@ -11,6 +11,7 @@ import {
   Calendar,
   Award,
   Link2,
+  LogOut,
 } from "lucide-react";
 
 interface UserData {
@@ -68,11 +69,9 @@ export default function ProfilePage() {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
-    // Update the fetchUser function in useEffect
-    // app/profile/page.tsx (updated fetchUser function)
-    // In your profile/page.tsx
     const fetchUser = async () => {
       try {
         console.log("Fetching user data...");
@@ -111,6 +110,27 @@ export default function ProfilePage() {
     fetchUser();
   }, [router]);
 
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      const response = await fetch("/api/users/logout", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        router.push("/login");
+      } else {
+        throw new Error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+      setError("Failed to logout. Please try again.");
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -127,136 +147,150 @@ export default function ProfilePage() {
       </div>
     );
 
-    return (
-      <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 bg-gray-200 flex items-center justify-center">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-            {/* Profile Header */}
-            <div className="bg-gradient-to-r from-green-500 to-green-600 p-6">
-              <div className="flex items-center space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="h-20 w-20 rounded-full bg-green-600 flex items-center justify-center shadow-lg">
-                    <User className="h-10 w-10 text-green-100" />
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <h1 className="text-2xl md:text-3xl font-bold text-white">
-                    {user?.name || "No Name"}
-                  </h1>
-                  <p className="text-green-100 flex items-center text-sm md:text-base">
-                    <Building className="h-5 w-5 mr-2" />
-                    {user?.collegeName || "No college specified"}
-                  </p>
+  return (
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 bg-gray-200 flex items-center justify-center">
+      <div className="max-w-3xl mx-auto w-full">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+          {/* Profile Header with Logout Button */}
+          <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 relative">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <div className="h-20 w-20 rounded-full bg-green-600 flex items-center justify-center shadow-lg">
+                  <User className="h-10 w-10 text-green-100" />
                 </div>
               </div>
+              <div className="space-y-1">
+                <h1 className="text-2xl md:text-3xl font-bold text-white">
+                  {user?.name || "No Name"}
+                </h1>
+                <p className="text-green-100 flex items-center text-sm md:text-base">
+                  <Building className="h-5 w-5 mr-2" />
+                  {user?.collegeName || "No college specified"}
+                </p>
+              </div>
             </div>
-  
-            {/* Profile Content */}
-            <div className="p-6 space-y-8">
-              {/* Basic Information Section */}
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="absolute top-6 right-6 flex items-center space-x-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all duration-200"
+            >
+              {isLoggingOut ? (
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+              ) : (
+                <>
+                  <LogOut className="h-5 w-5" />
+                  <span className="hidden sm:inline">Logout</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Profile Content */}
+          <div className="p-6 space-y-8">
+            {/* Basic Information Section */}
+            <section className="space-y-6">
+              <div className="flex items-center pb-2 border-b-2 border-green-100">
+                <User className="h-6 w-6 mr-2 text-green-500" />
+                <h2 className="text-xl font-semibold text-gray-800">
+                  Basic Information
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <InfoItem
+                  icon={<Mail className="h-6 w-6" />}
+                  label="Email"
+                  value={user?.email}
+                />
+                <InfoItem
+                  icon={<GraduationCap className="h-6 w-6" />}
+                  label="Role"
+                  value={user?.userType}
+                  capitalize
+                />
+              </div>
+            </section>
+
+            {/* Conditional Sections */}
+            {user?.userType === "student" ? (
               <section className="space-y-6">
                 <div className="flex items-center pb-2 border-b-2 border-green-100">
-                  <User className="h-6 w-6 mr-2 text-green-500" />
+                  <BookOpen className="h-6 w-6 mr-2 text-green-500" />
                   <h2 className="text-xl font-semibold text-gray-800">
-                    Basic Information
+                    Academic Details
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <InfoItem
-                    icon={<Mail className="h-6 w-6" />}
-                    label="Email"
-                    value={user?.email}
+                    icon={<Calendar className="h-6 w-6" />}
+                    label="Graduation Year"
+                    value={user?.graduationYear}
                   />
                   <InfoItem
-                    icon={<GraduationCap className="h-6 w-6" />}
-                    label="Role"
-                    value={user?.userType}
-                    capitalize
+                    icon={<Award className="h-6 w-6" />}
+                    label="CGPA"
+                    value={user?.cgpa?.toFixed(2)}
                   />
                 </div>
               </section>
-  
-              {/* Conditional Sections */}
-              {user?.userType === "student" ? (
+            ) : (
+              user?.userType === "professor" && (
                 <section className="space-y-6">
                   <div className="flex items-center pb-2 border-b-2 border-green-100">
-                    <BookOpen className="h-6 w-6 mr-2 text-green-500" />
+                    <Award className="h-6 w-6 mr-2 text-green-500" />
                     <h2 className="text-xl font-semibold text-gray-800">
-                      Academic Details
+                      Professional Details
                     </h2>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-6">
                     <InfoItem
-                      icon={<Calendar className="h-6 w-6" />}
-                      label="Graduation Year"
-                      value={user?.graduationYear}
+                      icon={<User className="h-6 w-6" />}
+                      label="Position"
+                      value={user?.position}
                     />
                     <InfoItem
-                      icon={<Award className="h-6 w-6" />}
-                      label="CGPA"
-                      value={user?.cgpa?.toFixed(2)}
+                      icon={<Link2 className="h-6 w-6" />}
+                      label="Google Scholar"
+                      value={user?.googleScholar}
+                      isLink
                     />
-                  </div>
-                </section>
-              ) : (
-                user?.userType === "professor" && (
-                  <section className="space-y-6">
-                    <div className="flex items-center pb-2 border-b-2 border-green-100">
-                      <Award className="h-6 w-6 mr-2 text-green-500" />
-                      <h2 className="text-xl font-semibold text-gray-800">
-                        Professional Details
-                      </h2>
-                    </div>
-                    <div className="space-y-6">
+                    {user?.otherLinks?.map((link, index) => (
                       <InfoItem
-                        icon={<User className="h-6 w-6" />}
-                        label="Position"
-                        value={user?.position}
-                      />
-                      <InfoItem
+                        key={index}
                         icon={<Link2 className="h-6 w-6" />}
-                        label="Google Scholar"
-                        value={user?.googleScholar}
+                        label={`Link ${index + 1}`}
+                        value={link}
                         isLink
                       />
-                      {user?.otherLinks?.map((link, index) => (
-                        <InfoItem
-                          key={index}
-                          icon={<Link2 className="h-6 w-6" />}
-                          label={`Link ${index + 1}`}
-                          value={link}
-                          isLink
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )
-              )}
-  
-              {/* Interests Section */}
-              {user?.interests && user.interests.length > 0 && (
-                <section className="space-y-6">
-                  <div className="flex items-center pb-2 border-b-2 border-green-100">
-                    <BookOpen className="h-6 w-6 mr-2 text-green-500" />
-                    <h2 className="text-xl font-semibold text-gray-800">
-                      Interests
-                    </h2>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    {user.interests.map((interest, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-green-50 text-green-800 rounded-full text-sm font-medium transition-all hover:bg-green-100 hover:scale-105"
-                      >
-                        {interest}
-                      </span>
                     ))}
                   </div>
                 </section>
-              )}
-            </div>
+              )
+            )}
+
+            {/* Interests Section */}
+            {user?.interests && user.interests.length > 0 && (
+              <section className="space-y-6">
+                <div className="flex items-center pb-2 border-b-2 border-green-100">
+                  <BookOpen className="h-6 w-6 mr-2 text-green-500" />
+                  <h2 className="text-xl font-semibold text-gray-800">
+                    Interests
+                  </h2>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {user.interests.map((interest, index) => (
+                    <span
+                      key={index}
+                      className="px-4 py-2 bg-green-50 text-green-800 rounded-full text-sm font-medium transition-all hover:bg-green-100 hover:scale-105"
+                    >
+                      {interest}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}

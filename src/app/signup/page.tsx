@@ -43,6 +43,7 @@ export default function SignupPage() {
     cgpa: "",
     position: "",
     googleScholar: "",
+    otherLinks: "",
     interests: [] as string[],
   });
 
@@ -268,7 +269,10 @@ export default function SignupPage() {
                   className="w-full p-3 pl-10 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-400"
                   value={formData.googleScholar}
                   onChange={(e) =>
-                    setFormData((f) => ({ ...f, googleScholar: e.target.value }))
+                    setFormData((f) => ({
+                      ...f,
+                      googleScholar: e.target.value,
+                    }))
                   }
                 />
               </div>
@@ -341,7 +345,10 @@ export default function SignupPage() {
                 className="w-full p-3 pl-10 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:outline-none placeholder-gray-400"
                 value={formData.confirmPassword}
                 onChange={(e) =>
-                  setFormData((f) => ({ ...f, confirmPassword: e.target.value }))
+                  setFormData((f) => ({
+                    ...f,
+                    confirmPassword: e.target.value,
+                  }))
                 }
                 required
                 minLength={8}
@@ -363,7 +370,10 @@ export default function SignupPage() {
 
           <p className="text-center text-gray-600">
             Already have an account?{" "}
-            <Link href="/login" className="text-green-600 hover:underline font-medium">
+            <Link
+              href="/login"
+              className="text-green-600 hover:underline font-medium"
+            >
               Login
             </Link>
           </p>

@@ -8,11 +8,11 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   collegeName: { type: String, required: true },
   interests: [{ type: String }],
-  
+
   // Student specific
   graduationYear: Number,
   cgpa: Number,
-  
+
   // Professor specific
   position: String,
   googleScholar: String,
@@ -42,4 +42,3 @@ UserSchema.virtual("isVerdified").get(function () {
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
-
