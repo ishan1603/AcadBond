@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What is AcadBond?",
+    "answer": "AcadBond is a Research Paper Collaboration Platform that connects students with professors for research opportunities. It allows professors to post research paper projects and students to search and apply for these opportunities. The platform facilitates academic collaboration with user-friendly interfaces and secure authentication."
+  },
+  {
+    "question": "How do I post a research paper opportunity?",
+    "answer": "As a professor, you can post a research paper opportunity by navigating to the 'Post Research' section after logging in. Fill in the research details, requirements, and project scope to create a new research opportunity listing."
+  },
+  {
+    "question": "How can I search for research opportunities?",
+    "answer": "Students can search for research opportunities by keywords, field of study, university, and other filters using the search bar on the homepage or the dedicated research search page."
+  },
+  {
+    "question": "How do I apply for a research opportunity?",
+    "answer": "To apply for a research opportunity, click on the research listing and follow the application instructions provided. You may need to upload your academic resume, statement of interest, and provide additional information about your qualifications."
+  },
+  {
+    "question": "Can I save research opportunities to apply later?",
+    "answer": "Yes, you can save research opportunities by clicking the 'Save Research' button on the listing. Saved opportunities can be accessed from your profile under the 'Saved Research' section."
+  },
+  {
+    "question": "How do I track my research applications?",
+    "answer": "Students can track the status of their research applications from the 'Applications' section in their profile. This section provides updates on the progress of each application and any feedback from professors."
+  }
+]
