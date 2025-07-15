@@ -64,7 +64,7 @@ const JobPage = () => {
           <MapPinIcon /> {job?.location}
         </div>
         <div className="flex gap-2">
-          <Briefcase /> {job?.applications?.length} Applicants
+          <Briefcase /> {job?.applications?.length} Students
         </div>
         <div className="flex gap-2">
           {job?.isOpen ? (
@@ -86,7 +86,7 @@ const JobPage = () => {
           >
             <SelectValue
               placeholder={
-                "Hiring Status " + (job?.isOpen ? "( Open )" : "( Closed )")
+                "Submission Status " + (job?.isOpen ? "( Open )" : "( Closed )")
               }
             />
           </SelectTrigger>
@@ -97,7 +97,7 @@ const JobPage = () => {
         </Select>
       )}
 
-      <h2 className="text-2xl sm:text-3xl font-bold">About the job</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold">About the research paper</h2>
       <p className="sm:text-lg">{job?.description}</p>
 
       <h2 className="text-2xl sm:text-3xl font-bold">
@@ -118,7 +118,7 @@ const JobPage = () => {
       {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
       {job?.applications?.length > 0 && job?.recruiter_id === user?.id && (
         <div className="flex flex-col gap-2">
-          <h2 className="font-bold mb-4 text-xl ml-1">Applications</h2>
+          <h2 className="font-bold mb-4 text-xl ml-1">Submissions</h2>
           {job?.applications.map((application) => {
             return (
               <ApplicationCard key={application.id} application={application} />

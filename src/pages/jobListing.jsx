@@ -75,7 +75,7 @@ const JobListing = () => {
   return (
     <div className="">
       <h1 className="gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8">
-        Latest Jobs
+        Latest Research Papers
       </h1>
       <form
         onSubmit={handleSearch}
@@ -83,7 +83,7 @@ const JobListing = () => {
       >
         <Input
           type="text"
-          placeholder="Search Jobs by Title.."
+          placeholder="Search Research Papers by Title.."
           name="search-query"
           className="h-full flex-1  px-4 text-md"
         />
@@ -155,7 +155,7 @@ const JobListing = () => {
               );
             })
           ) : (
-            <div>No Jobs Found 😢</div>
+            <div>No Research Papers Found 😢</div>
           )}
         </div>
       )}

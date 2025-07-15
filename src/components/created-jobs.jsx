@@ -39,7 +39,7 @@ const CreatedJobs = () => {
               );
             })
           ) : (
-            <div>No Jobs Found 😢</div>
+            <div>No Research Papers Found 😢</div>
           )}
         </div>
       )}

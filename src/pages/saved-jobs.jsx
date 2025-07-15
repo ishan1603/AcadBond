@@ -27,25 +27,24 @@ const SavedJobs = () => {
 
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8">
-        Saved Jobs
+      <h1 className="gradient-title font-extrabold text-5xl sm:text-7xl text-center pb-8">
+        Saved Research Papers
       </h1>
-
       {loadingSavedJobs === false && (
         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {savedJobs?.length ? (
             savedJobs?.map((saved) => {
               return (
                 <JobCard
-                  key={saved.id}
+                  key={saved?.job?.id}
                   job={saved?.job}
                   onJobAction={fnSavedJobs}
-                  savedInit={true}
+                  isMyJob={false}
                 />
               );
             })
           ) : (
-            <div>No Saved Jobs 👀</div>
+            <div>No Saved Research Papers 👀</div>
           )}
         </div>
       )}

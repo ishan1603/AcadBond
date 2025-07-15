@@ -9,7 +9,7 @@ const Onboarding = () => {
   const navigate = useNavigate();
 
   const navigateUser = (currRole) => {
-    navigate(currRole === "recruiter" ? "/post-job" : "/jobs");
+    navigate(currRole === "professor" ? "/post-job" : "/jobs");
   };
 
   const handleRoleSelection = async (role) => {
@@ -43,16 +43,16 @@ const Onboarding = () => {
         <Button
           variant="blue"
           className="h-36 text-2xl"
-          onClick={() => handleRoleSelection("candidate")}
+          onClick={() => handleRoleSelection("student")}
         >
-          Candidate
+          Student
         </Button>
         <Button
           variant="destructive"
           className="h-36 text-2xl"
-          onClick={() => handleRoleSelection("recruiter")}
+          onClick={() => handleRoleSelection("professor")}
         >
-          Recruiter
+          Professor
         </Button>
       </div>
     </div>

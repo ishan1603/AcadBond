@@ -79,13 +79,13 @@ export function ApplyJobDrawer({ user, job, fetchJob, applied = false }) {
           variant={job?.isOpen && !applied ? "blue" : "destructive"}
           disabled={!job?.isOpen || applied}
         >
-          {job?.isOpen ? (applied ? "Applied" : "Apply") : "Hiring Closed"}
+          {job?.isOpen ? (applied ? "Submitted" : "Submit") : "Submissions Closed"}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>
-            Apply for {job?.title} at {job?.company?.name}
+            Submit to {job?.title} at {job?.company?.name}
           </DrawerTitle>
           <DrawerDescription>Please Fill the form below</DrawerDescription>
         </DrawerHeader>

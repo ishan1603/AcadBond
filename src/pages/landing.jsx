@@ -21,7 +21,7 @@ const LandingPage = () => {
     <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
       <section className="text-center ">
         <h1 className="flex flex-col items-center justify-center gradient-title font-extrabold text-4xl sm:text-6xl lg:text-8xl tracking-tighter py-4">
-          Find Your Next Research Oppurtunity
+          Find Your Next Research Paper Opportunity
           <span className="flex items-center gap-2 sm:gap-6">
             with
             <img
@@ -77,7 +77,7 @@ const LandingPage = () => {
             <CardTitle className="font-bold">For Students</CardTitle>
           </CardHeader>
           <CardContent>
-            Search and apply for research papers, track applications, and more.
+            Search and submit to research papers, track submissions, and more.
           </CardContent>
         </Card>
         <Card>
@@ -85,8 +85,7 @@ const LandingPage = () => {
             <CardTitle className="font-bold">For Professors</CardTitle>
           </CardHeader>
           <CardContent>
-            Post research papers, manage applications, and find the best
-            candidates.
+            Post research papers, manage submissions, and find the best students.
           </CardContent>
         </Card>
       </section>

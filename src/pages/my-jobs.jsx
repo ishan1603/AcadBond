@@ -13,11 +13,11 @@ const MyJobs = () => {
   return (
     <div>
       <h1 className="gradient-title font-extrabold text-5xl sm:text-7xl text-center pb-8">
-        {user?.unsafeMetadata?.role === "candidate"
-          ? "My Applications"
-          : "My Jobs"}
+        {user?.unsafeMetadata?.role === "student"
+          ? "My Submissions"
+          : "My Research Papers"}
       </h1>
-      {user?.unsafeMetadata?.role === "candidate" ? (
+      {user?.unsafeMetadata?.role === "student" ? (
         <CreatedApplications />
       ) : (
         <CreatedJobs />
